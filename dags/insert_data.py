@@ -51,4 +51,3 @@ with DAG(
         op_kwargs={"filenames": csv_files},
     )
     create_schemas >> insert_into_db >> create_tables
-    # create_schemas >> create_tables

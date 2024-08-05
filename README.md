@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # ETL-процесс для обновления данных в БД и выгруки формы 101 банковского отчета.
 
 Ссылка на видео: https://cloud.mail.ru/public/trmM/6XYVu7hy7
@@ -22,6 +21,7 @@ ETL процесс состоит из следующий этапов:
 - Pandas
 - SQLAlchemy
 - PostgreSQL
+- Airflow
 
 ### Установка проекта локально <a name="local-install"></a>
 
@@ -30,27 +30,7 @@ ETL процесс состоит из следующий этапов:
    ```bash
    git clone https://github.com/VitaliyDrozdov/NFLX_ETL
 
-2. **Создаем и активируем виртуальное окружение:**
-
-* Для Linux/macOS
-
-    ```
-    python3 -m venv env
-    source env/bin/activate
-    python3 -m pip install --upgrade pip
-    ```
-
-* Для windows
-
-    ```
-    python -m venv venv
-    source venv/scripts/activate
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-    ```
-
-
-3. **Подготавливаем переменные окружения к работе:**
+2. **Подготавливаем переменные окружения к работе:**
 
 *Копируем файл*  .env.example с новым названием .env и заполняем его необходимыми данными:
 
@@ -58,47 +38,40 @@ ETL процесс состоит из следующий этапов:
 cp .env.example .env
 ```
 
-### Экспортируем данные в БД:
+3. **Запуск Airflow в Docker контейнерах:**
+### Запускаем Airflow в контейнере:
 
-*Создаем в БД новые схемы ```"DS"``` и ```"LOG"```*
-
-
-*В корневой папке проекта создаем папку ```"Иcходные файлы"``` и копируем необходимые файлы с таблицами в формате .csv*
-
-*Запускаем скрипт ```main.py```*
+*В корневой директории вводим ```docker compose up -d```*
 
 ```shell
-python main.py
+docker compose up -d
 ```
-В результате в БД в схеме "DS" создадутся таблицы аналогичные именам файлов и заполнятся данными из .csv файлов. Логи выполнения будут доступные в таблице "etl_log" в схеме "LOG".
+## Airflow будет доступен по адресу:
+<h3>
+    <a href="http://127.0.0.1:8080//">http://127.0.0.1:8080/</a>
+</h3>
+
+Данные для входа настриваются в .env файле. 
+По-умолчанию:
+login: airflow
+password: airflow
+
+4. **Настройка подключения к БД:**
+
+В Airflow Connections настраиваем подключение к базе данных. Вводим данные из .env. По-умолчанию:
+Connection Id = postgres_local
+host = host.docker.internal
+login = airflow
+password = airflow
+port = 5432
+
+
+5. **Запускаем DAG через web интерфейс:**
 
 ## Расчитываем витрины данных:
 
-В папке data_mart лежат необходимые скрипты sql для создания нужных таблиц и процедур.
+В результате в БД в схеме "DS" создадутся таблицы аналогичные именам файлов и заполнятся данными из .csv файлов. Логи выполнения будут доступные в таблице "etl_log" в схеме "LOG".
 
-
-```shell
-cd data_mart
-```
-
-Последовательно выполняем скрипты из файлов:
-
-```shell
-create_tables
-fill_account_turnover_f
-fill_account_balance_f
-fill_f101_round_f
-do_procedures
-```
 В схеме "DM" создадутся таблицы  account_turnover_f, account_balance_f, fill_f101_round_f и заполняется рассчитанными данными.
 
-## Выгружаем полученные данные из таблицы f101_round_f:
-
-Запускаем скрипт ```f101_manager.py``` в корне проекта:
-```shell
-python f101_manager.py
-```
 В папке data_mart (по-умолчанию) появится файл fill_f101_round_f.csv с данными из таблицы.
-=======
-# NFLX_ETL_v2
->>>>>>> ad7c885b5feb7d3e91db4a3faccbf4493810675a
