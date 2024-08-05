@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ETL-процесс для обновления данных в БД и выгруки формы 101 банковского отчета.
 
 Ссылка на видео: https://cloud.mail.ru/public/trmM/6XYVu7hy7
@@ -98,3 +99,6 @@ do_procedures
 python f101_manager.py
 ```
 В папке data_mart (по-умолчанию) появится файл fill_f101_round_f.csv с данными из таблицы.
+=======
+# NFLX_ETL_v2
+>>>>>>> ad7c885b5feb7d3e91db4a3faccbf4493810675a
