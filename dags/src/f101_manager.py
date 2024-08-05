@@ -1,10 +1,10 @@
 import os
 from dotenv import load_dotenv
 
-from core.db_config import engine
-from core.parser import export_to_csv, read_data, load_to_db
+from src.core.db_config import engine
+from src.core.parser import export_to_csv, read_data, load_to_db
 
-from core.runtime import log_execution
+from src.core.runtime import log_execution
 
 load_dotenv()
 
@@ -36,10 +36,10 @@ def proccess(filename, load=True):
         )
 
 
-def main():
+def f_101_main():
     proccess(EXPORT_TABLE_NAME)
     engine.dispose()
 
 
 if __name__ == "__main__":
-    main()
+    f_101_main()

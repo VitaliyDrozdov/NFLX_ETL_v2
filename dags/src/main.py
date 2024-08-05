@@ -12,7 +12,7 @@ from src.core.runtime import log_execution
 
 load_dotenv()
 
-CSVPATH = os.getenv("CSVPATH")
+CSVPATH = os.getenv("AIRFLOW_CONN_ID")
 
 csv_files = [
     "ft_balance_f.csv",
